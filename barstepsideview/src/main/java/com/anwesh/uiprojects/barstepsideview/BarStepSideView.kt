@@ -206,4 +206,13 @@ class BarStepSideView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BarStepSideView {
+            val view : BarStepSideView = BarStepSideView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
