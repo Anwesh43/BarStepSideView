@@ -25,17 +25,19 @@ fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse
 fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale(i, n)) * n
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
 
-fun Canvas.drawBarStep(j : Int, scale : Float, size : Float, sj : Float, paint : Paint) {
+fun Canvas.drawBarStep(j : Int, scale : Float, size : Float, w : Float, sj : Float, paint : Paint) {
     val hGap : Float = 2 * size / bars
+    val sf : Float = scale.sinify().divideScale(j, bars)
+    val x : Float = (w / 2 - size) * sf * sj
     save()
-    translate(0f, -size + hGap * j + hGap / 2)
+    translate(x, -size + hGap * j + hGap / 2)
     drawRect(RectF(-size, -hGap / 2, size, hGap / 2), paint)
     restore()
 }
 
-fun Canvas.drawBarSteps(scale : Float, size : Float, sj : Float, paint : Paint) {
+fun Canvas.drawBarSteps(scale : Float, size : Float, w : Float, sj : Float, paint : Paint) {
     for (j in 0..(bars - 1)) {
-        drawBarStep(j, scale, size, sj, paint)
+        drawBarStep(j, scale, size, w, sj, paint)
     }
 }
 
@@ -47,7 +49,7 @@ fun Canvas.drawBSSNode(i : Int, scale : Float, paint : Paint) {
     paint.color = foreColor
     save()
     translate(gap * (i + 1), h / 2)
-    drawBarSteps(scale, size, 1f - 2 * i, paint)
+    drawBarSteps(scale, size, w, 1f - 2 * i, paint)
     restore()
 }
 
