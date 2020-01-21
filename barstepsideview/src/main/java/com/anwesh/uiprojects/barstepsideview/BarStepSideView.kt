@@ -48,8 +48,8 @@ fun Canvas.drawBSSNode(i : Int, scale : Float, paint : Paint) {
     val size : Float = gap / sizeFactor
     paint.color = foreColor
     save()
-    translate(gap * (i + 1), h / 2)
-    drawBarSteps(scale, size, w, 1f - 2 * i, paint)
+    translate(w / 2, gap * (i + 1))
+    drawBarSteps(scale, size, w, 1f - 2 * (i % 2), paint)
     restore()
 }
 
