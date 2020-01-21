@@ -183,4 +183,26 @@ class BarStepSideView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : BarStepSideView) {
+
+        private val animator : Animator = Animator(view)
+        private val bss : BarStepSide = BarStepSide(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            bss.draw(canvas, paint)
+            animator.animate {
+                bss.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            bss.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
